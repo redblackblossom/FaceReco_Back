@@ -18,7 +18,7 @@ public class ProjectSecurityConfig {
                 requests.requestMatchers("/register").permitAll();});
         http.formLogin(Customizer.withDefaults());
         http.httpBasic(Customizer.withDefaults());
-
+        
         return http.build();
     }
     @Bean

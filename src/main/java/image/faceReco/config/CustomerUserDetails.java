@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 @Service
 @RequiredArgsConstructor
 public class CustomerUserDetails implements UserDetailsService {
@@ -34,3 +34,4 @@ public class CustomerUserDetails implements UserDetailsService {
         return new User(userName, password,authorities );
     }
 }
+*/
