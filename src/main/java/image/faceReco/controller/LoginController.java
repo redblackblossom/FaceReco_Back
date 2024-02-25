@@ -6,6 +6,7 @@ import image.faceReco.domain.LoginDTO;
 import image.faceReco.service.CustomerServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +19,7 @@ public class LoginController {
     private final CustomerServiceImp customerService;
     private final PasswordEncoder passwordEncoder;
     @PostMapping("/register")
-    ResponseEntity<String> registerCustomer(@RequestBody JoinDTO joinDTO){
+     public ResponseEntity<String> registerCustomer(@RequestBody JoinDTO joinDTO){
         Customer savedCustomer = null;
         ResponseEntity response= null;
         try{
@@ -34,14 +35,23 @@ public class LoginController {
 
         return response;
     }
-    /*
-    @GetMapping("/login")
-    ResponseEntity<String> loginCustomer(@ResponseBody LoginDTO loginDTO){
 
+    /*
+    @PostMapping("/login")
+    public ResponseEntity<String> loginCustomer(@RequestBody LoginDTO loginDTO){
+        System.out.println(loginDTO.getUserId()+ "  "+ loginDTO.getPwd());
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        header.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET,POST,PATCH,DELETE");
+        header.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type,Authorization");
+        header.add(HttpHeaders.CONTENT_TYPE, "application/json");
+
+        return ResponseEntity.status(500).headers(header).body("good");
     }
-     */
+    */
+
     @GetMapping("/")
     ResponseEntity<String> index(){
-        return  ResponseEntity.status(HttpStatus.ACCEPTED).body("sucees");
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).body("success");
     }
 }
