@@ -1,4 +1,4 @@
-package image.faceReco.filter;
+package image.faceReco.security.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,8 +1,10 @@
-package image.faceReco.config;
+package image.faceReco.security.provider;
 
 import image.faceReco.domain.Customer;
 import image.faceReco.repository.CustomerRepository;
+import image.faceReco.security.token.ApiUsernamePasswordAuthenticationToken;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerUsernamePwdAuthenticationProvider implements AuthenticationProvider {
+public class ApiUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
     private final PasswordEncoder passwordEncoder;
     private final CustomerRepository customerRepository;
     @Override
@@ -30,7 +32,7 @@ public class CustomerUsernamePwdAuthenticationProvider implements Authentication
             if(passwordEncoder.matches(pwd, customer.get(0).getPwd())){
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
-                return new UsernamePasswordAuthenticationToken(userId, pwd,authorities);
+                return new ApiUsernamePasswordAuthenticationToken(userId, pwd,authorities);
             }else{
                 throw new BadCredentialsException("Invalid password");
             }
@@ -41,6 +43,6 @@ public class CustomerUsernamePwdAuthenticationProvider implements Authentication
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+        return (ApiUsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
     }
 }

@@ -36,6 +36,11 @@ public class LoginController {
         return response;
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "good test!";
+    }
+
     /*
     @PostMapping("/login")
     public ResponseEntity<String> loginCustomer(@RequestBody LoginDTO loginDTO){
