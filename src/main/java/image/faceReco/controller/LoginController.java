@@ -3,6 +3,7 @@ package image.faceReco.controller;
 import image.faceReco.domain.Customer;
 import image.faceReco.domain.JoinDTO;
 import image.faceReco.domain.LoginDTO;
+import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
 import image.faceReco.service.CustomerServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +38,8 @@ public class LoginController {
     }
 
     @GetMapping("/test")
-    public String test(){
-        return "good test!";
+    public String test(@UserId String userId){
+        return userId;
     }
 
     /*
