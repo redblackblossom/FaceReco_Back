@@ -1,6 +1,6 @@
-package image.faceReco.repository;
+package image.faceReco.repository.customer;
 
-import image.faceReco.domain.Customer;
+import image.faceReco.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

@@ -1,13 +1,11 @@
 package image.faceReco.security.provider;
 
-import image.faceReco.domain.Customer;
-import image.faceReco.repository.CustomerRepository;
+import image.faceReco.domain.entity.Customer;
+import image.faceReco.repository.customer.CustomerRepository;
 import image.faceReco.security.token.ApiUsernamePasswordAuthenticationToken;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;

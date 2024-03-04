@@ -1,13 +1,11 @@
 package image.faceReco.controller;
 
-import image.faceReco.domain.Customer;
-import image.faceReco.domain.JoinDTO;
-import image.faceReco.domain.LoginDTO;
+import image.faceReco.domain.entity.Customer;
+import image.faceReco.domain.DTO.JoinDTO;
 import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
 import image.faceReco.service.CustomerServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

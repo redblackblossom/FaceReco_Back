@@ -1,5 +1,7 @@
-package image.faceReco.domain;
+package image.faceReco.domain.entity;
 
+import image.faceReco.domain.DTO.JoinDTO;
+import image.faceReco.domain.DTO.LoginDTO;
 import lombok.Data;
 
 @Data

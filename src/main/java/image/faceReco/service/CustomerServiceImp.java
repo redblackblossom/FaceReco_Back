@@ -1,7 +1,7 @@
 package image.faceReco.service;
 
-import image.faceReco.domain.Customer;
-import image.faceReco.repository.CustomerRepository;
+import image.faceReco.domain.entity.Customer;
+import image.faceReco.repository.customer.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

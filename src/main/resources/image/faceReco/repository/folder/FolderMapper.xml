@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="image.faceReco.repository.folder.FolderMapper">
+    <insert id="createFolder" useGeneratedKeys="true" keyProperty="folderId">
+        insert into folder(ownerId, parentFolder, folderName, createDate)
+        values(#{ownerId}, #{parentFolder}, #{folderName},#{createDate})
+    </insert>
+    <update id="updateFolderName">
+        update folder set folderName = #{updateFolderName} where folderId = #{folderId}
+    </update>
+    <select id="selectFolderByFolderId" resultType="Folder">
+        select folderId, ownerId, parentFolder, folderName, createDate from folder where folderId = #{id};
+    </select>
+</mapper>

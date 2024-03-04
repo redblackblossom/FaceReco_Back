@@ -1,6 +1,6 @@
-package image.faceReco.repository;
+package image.faceReco.repository.customer;
 
-import image.faceReco.domain.Customer;
+import image.faceReco.domain.entity.Customer;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

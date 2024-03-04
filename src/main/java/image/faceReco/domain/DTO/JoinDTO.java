@@ -1,4 +1,4 @@
-package image.faceReco.domain;
+package image.faceReco.domain.DTO;
 
 import lombok.Data;
 

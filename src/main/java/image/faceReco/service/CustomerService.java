@@ -1,6 +1,6 @@
 package image.faceReco.service;
 
-import image.faceReco.domain.Customer;
+import image.faceReco.domain.entity.Customer;
 
 import java.util.List;
 

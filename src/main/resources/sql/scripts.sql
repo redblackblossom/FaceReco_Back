@@ -25,7 +25,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `FaceReco`.`folder` (
   `folderId` INT NOT NULL AUTO_INCREMENT,
   `ownerId` INT NOT NULL,
-  `parentFolder` INT NOT NULL,
+  `parentFolder` INT,
   `folderName` VARCHAR(64) NOT NULL,
   `createDate` DATE NOT NULL,
   PRIMARY KEY (`folderId`),

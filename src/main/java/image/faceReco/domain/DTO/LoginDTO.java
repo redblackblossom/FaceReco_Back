@@ -1,6 +1,7 @@
-package image.faceReco.domain;
+package image.faceReco.domain.DTO;
 
 
+import image.faceReco.domain.entity.Customer;
 import lombok.Data;
 
 @Data
