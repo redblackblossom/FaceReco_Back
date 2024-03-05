@@ -36,8 +36,8 @@ public class LoginController {
     }
 
     @GetMapping("/test")
-    public String test(@UserId String userId){
-        return userId;
+    public String test(@UserId Integer userId){
+        return Integer.toString(userId);
     }
 
     /*

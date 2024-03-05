@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MybatisFolderRepository implements FolderRepository{
     private final FolderMapper folderMapper;
+
     @Override
     public int createFolder(Folder folder) {
         return folderMapper.createFolder(folder);
@@ -27,4 +28,10 @@ public class MybatisFolderRepository implements FolderRepository{
     public List<Folder> selectFolderByUserId(Integer id) {
         return folderMapper.selectFolderByFolderId(id);
     }
+
+    @Override
+    public int deleteFolderByFolderId(Integer folderId) {
+        return folderMapper.deleteFolderByFolderId(folderId);
+    }
+
 }

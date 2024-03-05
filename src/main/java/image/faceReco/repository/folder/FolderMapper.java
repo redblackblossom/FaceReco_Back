@@ -10,5 +10,7 @@ import java.util.List;
 public interface FolderMapper {
     int createFolder(Folder folder);
     int updateFolderName(FolderNameUpdateParam updateParam);
-    List<Folder> selectFolderByFolderId(Integer id);
+    List<Folder> selectFolderByFolderId(Integer folderId);
+    int deleteFolderByFolderId(Integer folderId);
+    List<Folder> selectFolderByAlbumId(Integer albumId);
 }

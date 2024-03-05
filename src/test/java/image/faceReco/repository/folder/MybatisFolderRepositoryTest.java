@@ -3,7 +3,8 @@ package image.faceReco.repository.folder;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.FolderNameUpdateParam;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,13 +19,31 @@ import java.util.Date;
 class MybatisFolderRepositoryTest {
     @Autowired
     private FolderRepository folderRepository;
+    private Folder testFolder;
+
+    @BeforeEach
+    public void before(){
+        //given
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String nowDate = format.format(now);
+        this.testFolder = new Folder(1,null, "myTestFolder",nowDate);
+        folderRepository.createFolder(this.testFolder);
+    }
+
+    @AfterEach
+    public void after(){
+        this.testFolder = null;
+    }
+
+
     @Test
     public void createFolder(){
         //given
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         String nowDate = format.format(now);
-        Folder folder = new Folder(1,null, "myTestFolder",nowDate);
+        Folder folder = new Folder(1,null, "myTestFolder2",nowDate);
 
         //when
         int index = folderRepository.createFolder(folder);
@@ -36,17 +55,27 @@ class MybatisFolderRepositoryTest {
     @Test
     public void setFolderRepository(){
         //given
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String nowDate = format.format(now);
-        Folder folder = new Folder(1,null, "myTestFolder",nowDate);
-        folderRepository.createFolder(folder);
-        FolderNameUpdateParam updateParam = new FolderNameUpdateParam(folder.getFolderId(), "myNewTestFolder");
+        FolderNameUpdateParam updateParam = new FolderNameUpdateParam(this.testFolder.getFolderId(), "myNewTestFolder");
+
         //when
-        folderRepository.updateFolderName(updateParam);
+        int updateCount = folderRepository.updateFolderName(updateParam);
 
         //then
-        String changedName = folderRepository.selectFolderByUserId(folder.getFolderId()).get(0).getFolderName();
+        String changedName = folderRepository.selectFolderByUserId(this.testFolder.getFolderId()).get(0).getFolderName();
         Assertions.assertThat(changedName).isEqualTo("myNewTestFolder");
+        Assertions.assertThat(updateCount).isEqualTo(1);
+    }
+
+    @Test
+    public void deleteFolderByFolderId(){
+        //given
+        Integer folderId = this.testFolder.getFolderId();
+
+        //when
+        int deleteCount = folderRepository.deleteFolderByFolderId(folderId);
+
+        //then
+        Assertions.assertThat(deleteCount).isEqualTo(1);
+        Assertions.assertThat(folderRepository.selectFolderByUserId(folderId).isEmpty()).isEqualTo(true);
     }
 }

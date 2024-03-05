@@ -16,6 +16,7 @@ public class JwtIssue {
         Date now = new Date();
         String jwt = Jwts.builder().setIssuer("FaceReco").setSubject("JWT TOKEN")
                 .claim("userId", authentication.getName())
+                .claim("id", authentication.getDetails())
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime()+ 30000000))
                 .signWith(key).compact();

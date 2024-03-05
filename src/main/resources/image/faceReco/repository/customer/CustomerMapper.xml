@@ -7,5 +7,4 @@
     <select id="findByUserId" resultType="Customer">
         select id, userId, pwd, role from customer where userId= #{userId}
     </select>
-
 </mapper>

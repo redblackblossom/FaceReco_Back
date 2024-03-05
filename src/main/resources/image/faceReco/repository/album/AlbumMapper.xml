@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="image.faceReco.repository.album.AlbumMapper">
+    <insert id="createAlbum" useGeneratedKeys="true" keyProperty="albumId">
+        insert into album(ownerId, ownerFolderId, albumName, createDate)
+        values(#{ownerId}, #{ownerFolderId}, #{albumName}, #{createDate})
+    </insert>
+    <select id="selectAlbumByParentFolderId" resultType="Album">
+        select albumId, ownerId, ownerFolderId, albumName, createDate from album
+        where ownerFolderId = #{parentFolderId}
+    </select>
+    <delete id="deleteAlbumByAlbumId">
+        delete from album where albumId = #{albumId}
+    </delete>
+    <update id="updateAlbumNameByAlbumId">
+        update album set albumName = #{updateAlbumName} where albumId = #{albumId}
+    </update>
+    <select id="selectAlbumByAlbumId" resultType="Album">
+        select albumId, ownerId, ownerFolderId, albumName, createDate from album
+        where albumId = #{albumId};
+    </select>
+</mapper>

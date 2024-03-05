@@ -9,6 +9,9 @@
         update folder set folderName = #{updateFolderName} where folderId = #{folderId}
     </update>
     <select id="selectFolderByFolderId" resultType="Folder">
-        select folderId, ownerId, parentFolder, folderName, createDate from folder where folderId = #{id};
+        select folderId, ownerId, parentFolder, folderName, createDate from folder where folderId = #{folderId};
     </select>
+    <delete id="deleteFolderByFolderId">
+        delete from folder where folderID = #{folderId}
+    </delete>
 </mapper>

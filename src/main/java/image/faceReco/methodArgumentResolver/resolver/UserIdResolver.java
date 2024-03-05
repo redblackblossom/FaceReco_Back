@@ -23,21 +23,21 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(UserId.class) &&
-                parameter.getParameterType().equals(String.class);
+                parameter.getParameterType().equals(Integer.class);
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         String jwt;
-        String userId = null;
+        Integer userId = null;
         jwt = request.getHeader(JWT_Header);
         if(jwt!=null){
             String[] splitString = jwt.split("\\.");
             String base64EncodeBody = splitString[1];
             String bodyString = new String(Base64.getDecoder().decode(base64EncodeBody), StandardCharsets.UTF_8);
             JSONObject jsonObj = new JSONObject(bodyString);
-            userId = jsonObj.getString("userId");
+            userId = jsonObj.getInt("id");
         }
         else{
             throw new IllegalArgumentException("Request does not have Token");

@@ -9,6 +9,7 @@ public class ApiUsernamePasswordAuthenticationToken extends AbstractAuthenticati
     private final Object principal;
     private Object credentials;
 
+
     public ApiUsernamePasswordAuthenticationToken(Object principal, Object credentials){
         super(null);
         this.principal = principal;
@@ -31,4 +32,6 @@ public class ApiUsernamePasswordAuthenticationToken extends AbstractAuthenticati
     public Object getPrincipal() {
         return this.principal;
     }
+
+
 }

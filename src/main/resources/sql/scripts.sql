@@ -45,19 +45,19 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `FaceReco`.`album` (
   `albumId` INT NOT NULL AUTO_INCREMENT,
   `ownerId` INT NOT NULL,
-  `ownerFoler` INT NOT NULL,
-  `folderName` VARCHAR(64) NOT NULL,
+  `ownerFolderId` INT NOT NULL,
+  `albumName` VARCHAR(64) NOT NULL,
   `createDate` DATE NOT NULL,
   PRIMARY KEY (`albumId`),
   INDEX `ownderId_idx` (`ownerId` ASC) VISIBLE,
-  INDEX `parentFolder_idx` (`ownerFoler` ASC) VISIBLE,
+  INDEX `parentFolder_idx` (`ownerFolderId` ASC) VISIBLE,
   CONSTRAINT `ownderId`
     FOREIGN KEY (`ownerId`)
     REFERENCES `FaceReco`.`customer` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `ownerFolder`
-    FOREIGN KEY (`ownerFoler`)
+    FOREIGN KEY (`ownerFolderId`)
     REFERENCES `FaceReco`.`folder` (`folderId`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)

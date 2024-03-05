@@ -30,7 +30,9 @@ public class ApiUsernamePasswordAuthenticationProvider implements Authentication
             if(passwordEncoder.matches(pwd, customer.get(0).getPwd())){
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
-                return new ApiUsernamePasswordAuthenticationToken(userId, pwd,authorities);
+                ApiUsernamePasswordAuthenticationToken token = new ApiUsernamePasswordAuthenticationToken(userId, pwd,authorities);
+                token.setDetails(customer.get(0).getId());
+                return token;
             }else{
                 throw new BadCredentialsException("Invalid password");
             }

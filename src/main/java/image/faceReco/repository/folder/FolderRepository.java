@@ -9,5 +9,7 @@ import java.util.List;
 public interface FolderRepository {
     int createFolder(Folder folder);
     int updateFolderName(FolderNameUpdateParam updateParam);
-    List<Folder> selectFolderByUserId(Integer id);
+    List<Folder> selectFolderByUserId(Integer folderId);
+    int deleteFolderByFolderId (Integer folderId);
+
 }
