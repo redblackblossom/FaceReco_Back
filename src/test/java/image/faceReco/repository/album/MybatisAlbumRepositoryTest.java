@@ -102,5 +102,26 @@ class MybatisAlbumRepositoryTest {
         Assertions.assertThat(updatedName).isEqualTo("newAlbumName");
     }
 
+    @Test
+    public void selectAlbumByOwnerId(){
+        //given
+        int ownerId = 1;
+        int beforeCount = albumRepository.selectAlbumByOwnerId(ownerId).size();
+        Album savedAlbum1 = new Album(ownerId, testFolder.getFolderId(),
+                    "testAlbum1", "2024-03-06");
+        Album savedAlbum2 = new Album(ownerId, testFolder.getFolderId(),
+                "testAlbum2", "2024-03-06");
+        Album savedAlbum3 = new Album(ownerId, testFolder.getFolderId(),
+                "testAlbum3", "2024-03-06");
+        albumRepository.createAlbum(savedAlbum1);
+        albumRepository.createAlbum(savedAlbum2);
+        albumRepository.createAlbum(savedAlbum3);
+
+        //when
+        int foundCount = albumRepository.selectAlbumByOwnerId(ownerId).size();
+
+        //then
+        Assertions.assertThat(foundCount).isEqualTo(beforeCount + 3);
+    }
 
 }

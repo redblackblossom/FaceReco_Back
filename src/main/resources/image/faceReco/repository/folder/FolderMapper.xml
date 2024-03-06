@@ -14,4 +14,10 @@
     <delete id="deleteFolderByFolderId">
         delete from folder where folderID = #{folderId}
     </delete>
+    <select id="selectFolderByOwnerId" resultType="Folder">
+        select folderId, ownerId, parentFolder, folderName, createDate from folder where ownerId = #{ownerId};
+    </select>
+    <delete id="deleteFolderByFolderIdArray">
+        delete from folder where ownerId = #{}
+    </delete>
 </mapper>

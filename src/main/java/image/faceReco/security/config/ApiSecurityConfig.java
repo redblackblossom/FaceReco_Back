@@ -46,7 +46,7 @@ public class ApiSecurityConfig {
                 //.addFilterAt(new ApiUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf((csrf)->csrf.disable())
                 .authorizeHttpRequests((requests)->{
-                    requests.requestMatchers("/test").authenticated();
+                    requests.requestMatchers("/test" , "/tests", "/api/**").authenticated();
                     requests.requestMatchers("/register", "/login", "/").permitAll();});
 
         //http.formLogin(Customizer.withDefaults());

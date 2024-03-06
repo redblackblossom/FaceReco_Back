@@ -1,4 +1,4 @@
-package image.faceReco.service;
+package image.faceReco.service.customer;
 
 import image.faceReco.domain.entity.Customer;
 

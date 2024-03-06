@@ -13,4 +13,5 @@ public interface AlbumMapper {
     int deleteAlbumByAlbumId(Integer albumId);
     int updateAlbumNameByAlbumId(AlbumNameUpdateParam updateParam);
     List<Album> selectAlbumByAlbumId(Integer albumId);
+    List<Album> selectAlbumByOwnerId(int ownerId);
 }

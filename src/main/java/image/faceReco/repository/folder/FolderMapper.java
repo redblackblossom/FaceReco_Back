@@ -12,5 +12,7 @@ public interface FolderMapper {
     int updateFolderName(FolderNameUpdateParam updateParam);
     List<Folder> selectFolderByFolderId(Integer folderId);
     int deleteFolderByFolderId(Integer folderId);
-    List<Folder> selectFolderByAlbumId(Integer albumId);
+    List<Folder> selectFolderByOwnerId(Integer ownerId);
+    int deleteFolderByFolderIdArray(int ownerId,List<Integer> folderIdArray);
+
 }

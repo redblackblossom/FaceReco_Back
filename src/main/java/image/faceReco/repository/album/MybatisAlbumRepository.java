@@ -36,4 +36,9 @@ public class MybatisAlbumRepository implements AlbumRepository{
     public List<Album> selectAlbumByAlbumId(Integer albumId){
         return albumMapper.selectAlbumByAlbumId(albumId);
     }
+
+    @Override
+    public List<Album> selectAlbumByOwnerId(int ownerId) {
+        return albumMapper.selectAlbumByOwnerId(ownerId);
+    }
 }

@@ -3,7 +3,7 @@ package image.faceReco.controller;
 import image.faceReco.domain.entity.Customer;
 import image.faceReco.domain.DTO.JoinDTO;
 import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
-import image.faceReco.service.CustomerServiceImp;
+import image.faceReco.service.customer.CustomerServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,6 +38,10 @@ public class LoginController {
     @GetMapping("/test")
     public String test(@UserId Integer userId){
         return Integer.toString(userId);
+    }
+    @GetMapping("/tests")
+    public String test(){
+        return "good";
     }
 
     /*

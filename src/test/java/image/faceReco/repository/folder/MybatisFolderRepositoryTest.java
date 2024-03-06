@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @Transactional
@@ -61,7 +62,7 @@ class MybatisFolderRepositoryTest {
         int updateCount = folderRepository.updateFolderName(updateParam);
 
         //then
-        String changedName = folderRepository.selectFolderByUserId(this.testFolder.getFolderId()).get(0).getFolderName();
+        String changedName = folderRepository.selectFolderByFolderId(this.testFolder.getFolderId()).get(0).getFolderName();
         Assertions.assertThat(changedName).isEqualTo("myNewTestFolder");
         Assertions.assertThat(updateCount).isEqualTo(1);
     }
@@ -76,6 +77,26 @@ class MybatisFolderRepositoryTest {
 
         //then
         Assertions.assertThat(deleteCount).isEqualTo(1);
-        Assertions.assertThat(folderRepository.selectFolderByUserId(folderId).isEmpty()).isEqualTo(true);
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(folderId).isEmpty()).isEqualTo(true);
+    }
+
+    @Test
+    public void selectFolderByOwnerId(){
+        //given
+        Integer ownerID = 1;
+        int beforeCount = folderRepository.selectFolderByOwnerId(ownerID).size();
+        Folder savedFolder1 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        Folder savedFolder2 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        Folder savedFolder3 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        folderRepository.createFolder(savedFolder1);
+        folderRepository.createFolder(savedFolder2);
+        folderRepository.createFolder(savedFolder3);
+
+        //when
+        List<Folder> foundFolderList = folderRepository.selectFolderByOwnerId(ownerID);
+
+        //then
+        Assertions.assertThat(foundFolderList.size()).isEqualTo(3 + beforeCount);
+
     }
 }

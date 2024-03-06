@@ -19,4 +19,8 @@
         select albumId, ownerId, ownerFolderId, albumName, createDate from album
         where albumId = #{albumId};
     </select>
+    <select id="selectAlbumByOwnerId" resultType="Album">
+        select albumId, ownerId, ownerFolderId, albumName, createDate from album
+        where ownerId = #{ownerId}
+    </select>
 </mapper>

@@ -25,13 +25,23 @@ public class MybatisFolderRepository implements FolderRepository{
     }
 
     @Override
-    public List<Folder> selectFolderByUserId(Integer id) {
+    public List<Folder> selectFolderByFolderId(Integer id) {
         return folderMapper.selectFolderByFolderId(id);
     }
 
     @Override
     public int deleteFolderByFolderId(Integer folderId) {
         return folderMapper.deleteFolderByFolderId(folderId);
+    }
+
+    @Override
+    public List<Folder> selectFolderByOwnerId(Integer ownerId) {
+        return folderMapper.selectFolderByOwnerId(ownerId);
+    }
+
+    @Override
+    public int deleteFolderByFolderIdArray(int ownerId, List<Integer> folderIdArray) {
+        return folderMapper.deleteFolderByFolderIdArray(ownerId, folderIdArray);
     }
 
 }
