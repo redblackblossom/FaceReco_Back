@@ -1,7 +1,10 @@
 package image.faceReco.repository.folder;
 
 import image.faceReco.domain.entity.Folder;
-import image.faceReco.domain.updateParam.FolderNameUpdateParam;
+import image.faceReco.domain.updateParam.IdListParam;
+import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.domain.updateParam.folder.ParentFolderIdUpdateByListParam;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
 class MybatisFolderRepositoryTest {
     @Autowired
     private FolderRepository folderRepository;
+
     private Folder testFolder;
 
     @BeforeEach
@@ -36,7 +41,6 @@ class MybatisFolderRepositoryTest {
     public void after(){
         this.testFolder = null;
     }
-
 
     @Test
     public void createFolder(){
@@ -56,7 +60,7 @@ class MybatisFolderRepositoryTest {
     @Test
     public void setFolderRepository(){
         //given
-        FolderNameUpdateParam updateParam = new FolderNameUpdateParam(this.testFolder.getFolderId(), "myNewTestFolder");
+        RepositoryNameUpdateParam updateParam = new RepositoryNameUpdateParam(1, this.testFolder.getFolderId(), "myNewTestFolder");
 
         //when
         int updateCount = folderRepository.updateFolderName(updateParam);
@@ -97,6 +101,55 @@ class MybatisFolderRepositoryTest {
 
         //then
         Assertions.assertThat(foundFolderList.size()).isEqualTo(3 + beforeCount);
+    }
 
+    @Test
+    public void deleteFolderByFoldrIdList(){
+        //given
+        Integer ownerID = 1;
+        Folder savedFolder1 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        Folder savedFolder2 = new Folder(ownerID,savedFolder1.getFolderId(), "testFolder1", "2024-03-06");
+        Folder savedFolder3 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        folderRepository.createFolder(savedFolder1);
+        folderRepository.createFolder(savedFolder2);
+        folderRepository.createFolder(savedFolder3);
+        List<Integer> folderIdList = new ArrayList<>();
+        folderIdList.add(savedFolder1.getFolderId());
+        folderIdList.add(savedFolder2.getFolderId());
+        folderIdList.add(savedFolder3.getFolderId());
+        IdListParam param = new IdListParam(ownerID, folderIdList);
+
+        //when
+        folderRepository.deleteFolderByFoldrIdList(param);
+
+        //then
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder1.getFolderId()).isEmpty()).isEqualTo(true);
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder2.getFolderId()).isEmpty()).isEqualTo(true);
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder3.getFolderId()).isEmpty()).isEqualTo(true);
+    }
+
+    @Test
+    public void updateFolderParentIdByFolderIdList(){
+        //given
+        Integer ownerID = 1;
+        Folder savedFolder1 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        Folder savedFolder2 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        Folder savedFolder3 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        folderRepository.createFolder(savedFolder1);
+        folderRepository.createFolder(savedFolder2);
+        folderRepository.createFolder(savedFolder3);
+        List<Integer> updateList = new ArrayList<>();
+        updateList.add(savedFolder1.getFolderId());
+        updateList.add(savedFolder2.getFolderId());
+        updateList.add(savedFolder3.getFolderId());
+        IdListParentIdParam  param = new IdListParentIdParam(ownerID, testFolder.getFolderId() , updateList);
+
+        //when
+        folderRepository.updateFolderParentIdByFolderIdList(param);
+
+        //then
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder1.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder2.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
+        Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder3.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
     }
 }

@@ -2,7 +2,11 @@ package image.faceReco.repository.album;
 
 import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.entity.Folder;
-import image.faceReco.domain.updateParam.AlbumNameUpdateParam;
+import image.faceReco.domain.updateParam.IdListParam;
+import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.domain.updateParam.album.AlbumDeleteByAlbumIdListParam;
+import image.faceReco.domain.updateParam.album.AlbumNameUpdateParam;
 import image.faceReco.repository.folder.FolderRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -13,10 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -89,17 +92,18 @@ class MybatisAlbumRepositoryTest {
     }
 
     @Test
-    public void updateAlbumNameByAlbumId(){
+    public void updateFolderName(){
         //given
-        AlbumNameUpdateParam updateParam = new AlbumNameUpdateParam(this.testAlbum.getAlbumId(), "newAlbumName");
+        int ownerId = 1;
+        RepositoryNameUpdateParam repositoryNameUpdateParam = new RepositoryNameUpdateParam(ownerId, testAlbum.getAlbumId(), "changeAlbumName");
 
         //when
-        int updatedCount = albumRepository.updateAlbumNameByAlbumId(updateParam);
+        int updatedCount = albumRepository.updateAlbumNameByAlbumId(repositoryNameUpdateParam);
 
         //then
         Assertions.assertThat(updatedCount).isEqualTo(1);
         String updatedName = albumRepository.selectAlbumByAlbumId(this.testAlbum.getAlbumId()).get(0).getAlbumName();
-        Assertions.assertThat(updatedName).isEqualTo("newAlbumName");
+        Assertions.assertThat(updatedName).isEqualTo("changeAlbumName");
     }
 
     @Test
@@ -122,6 +126,60 @@ class MybatisAlbumRepositoryTest {
 
         //then
         Assertions.assertThat(foundCount).isEqualTo(beforeCount + 3);
+    }
+
+    @Test
+    public void deleteAlbumByAlbumIdList(){
+        //given
+        int ownerId = 1;
+        Album createAlbum1 = new Album(ownerId, null, "testAlbum1", "2024-03-10");
+        Album createAlbum2 = new Album(ownerId, testFolder.getFolderId(), "testAlbum2", "2024-03-10");
+        Album createAlbum3 = new Album(ownerId, testFolder.getFolderId(), "testAlbum3", "2024-03-10");
+        albumRepository.createAlbum(createAlbum1);
+        albumRepository.createAlbum(createAlbum2);
+        albumRepository.createAlbum(createAlbum3);
+        List<Integer> deleteAlbumIdList = new ArrayList<>();
+        deleteAlbumIdList.add(createAlbum1.getAlbumId());
+        deleteAlbumIdList.add(createAlbum2.getAlbumId());
+        deleteAlbumIdList.add(createAlbum3.getAlbumId());
+        IdListParam param = new IdListParam(ownerId, deleteAlbumIdList);
+
+        //when
+        int count = albumRepository.deleteAlbumByAlbumIdList(param);
+
+        //then
+        Assertions.assertThat(albumRepository.selectAlbumByAlbumId(createAlbum1.getAlbumId()).isEmpty()).isEqualTo(true);
+        Assertions.assertThat(albumRepository.selectAlbumByAlbumId(createAlbum2.getAlbumId()).isEmpty()).isEqualTo(true);
+        Assertions.assertThat(albumRepository.selectAlbumByAlbumId(createAlbum3.getAlbumId()).isEmpty()).isEqualTo(true);
+    }
+
+    @Test
+    public void updateAlbumNameByAlbumIdList(){
+        //given
+        int ownerId = 1;
+        Album createAlbum1 = new Album(ownerId, null, "testAlbum1", "2024-03-10");
+        Album createAlbum2 = new Album(ownerId, null, "testAlbum2", "2024-03-10");
+        Album createAlbum3 = new Album(ownerId, null, "testAlbum3", "2024-03-10");
+        albumRepository.createAlbum(createAlbum1);
+        albumRepository.createAlbum(createAlbum2);
+        albumRepository.createAlbum(createAlbum3);
+        List<Integer> updateAlbum = new ArrayList<>();
+        updateAlbum.add(createAlbum1.getAlbumId());
+        updateAlbum.add(createAlbum2.getAlbumId());
+        updateAlbum.add(createAlbum3.getAlbumId());
+        IdListParentIdParam param = new IdListParentIdParam(ownerId, testFolder.getFolderId(), updateAlbum);
+
+        //when
+        int count = albumRepository.updateAlbumNameByAlbumIdList(param);
+        Integer parent1 = albumRepository.selectAlbumByAlbumId(createAlbum1.getAlbumId()).get(0).getOwnerFolderId();
+        Integer parent2 = albumRepository.selectAlbumByAlbumId(createAlbum2.getAlbumId()).get(0).getOwnerFolderId();
+        Integer parent3 = albumRepository.selectAlbumByAlbumId(createAlbum3.getAlbumId()).get(0).getOwnerFolderId();
+
+        //then
+        Assertions.assertThat(parent1).isEqualTo(testFolder.getFolderId());
+        Assertions.assertThat(parent2).isEqualTo(testFolder.getFolderId());
+        Assertions.assertThat(parent3).isEqualTo(testFolder.getFolderId());
+
     }
 
 }

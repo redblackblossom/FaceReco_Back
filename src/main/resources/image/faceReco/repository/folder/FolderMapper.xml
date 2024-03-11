@@ -2,22 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="image.faceReco.repository.folder.FolderMapper">
     <insert id="createFolder" useGeneratedKeys="true" keyProperty="folderId">
-        insert into folder(ownerId, parentFolder, folderName, createDate)
-        values(#{ownerId}, #{parentFolder}, #{folderName},#{createDate})
+        insert into folder(ownerId, parentFolderId, folderName, createDate)
+        values(#{ownerId}, #{parentFolderId}, #{folderName},#{createDate})
     </insert>
     <update id="updateFolderName">
-        update folder set folderName = #{updateFolderName} where folderId = #{folderId}
+        update folder set folderName = #{updateRepositoryName} where ownerId = #{ownerId} and folderId = #{repositoryId}
     </update>
     <select id="selectFolderByFolderId" resultType="Folder">
-        select folderId, ownerId, parentFolder, folderName, createDate from folder where folderId = #{folderId};
+        select folderId, ownerId, parentFolderId, folderName, createDate from folder where folderId = #{folderId};
     </select>
     <delete id="deleteFolderByFolderId">
         delete from folder where folderID = #{folderId}
     </delete>
     <select id="selectFolderByOwnerId" resultType="Folder">
-        select folderId, ownerId, parentFolder, folderName, createDate from folder where ownerId = #{ownerId};
+        select folderId, ownerId, parentFolderId, folderName, createDate from folder where ownerId = #{ownerId};
     </select>
+    <delete id="deleteFolderByFoldrIdList">
+        delete from folder where ownerId = #{ownerId} and folderId in
+        <foreach collection="idList" item="folderId" open="(" separator="," close=")">
+            #{folderId}
+        </foreach>
+    </delete>
+    <update id="updateFolderParentIdByFolderIdList">
+        update folder set parentFolderId = #{parentId}
+        where ownerId = #{ownerId} and folderId in
+        <foreach collection="idList" item="folderId" open="(" separator="," close=")">
+            #{folderId}
+        </foreach>
+    </update>
+    <!--
     <delete id="deleteFolderByFolderIdArray">
         delete from folder where ownerId = #{}
     </delete>
+    -->
 </mapper>

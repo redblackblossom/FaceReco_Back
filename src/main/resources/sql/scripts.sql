@@ -25,7 +25,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `FaceReco`.`folder` (
   `folderId` INT NOT NULL AUTO_INCREMENT,
   `ownerId` INT NOT NULL,
-  `parentFolder` INT,
+  `parentFolderId` INT,
   `folderName` VARCHAR(64) NOT NULL,
   `createDate` DATE NOT NULL,
   PRIMARY KEY (`folderId`),
@@ -35,7 +35,7 @@ CREATE TABLE `FaceReco`.`folder` (
     REFERENCES `FaceReco`.`customer` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
-    FOREIGN KEY (`parentFolder`)
+    FOREIGN KEY (`parentFolderId`)
     REFERENCES `FaceReco`.`folder` (`folderId`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION;
@@ -45,7 +45,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `FaceReco`.`album` (
   `albumId` INT NOT NULL AUTO_INCREMENT,
   `ownerId` INT NOT NULL,
-  `ownerFolderId` INT NOT NULL,
+  `ownerFolderId` INT,
   `albumName` VARCHAR(64) NOT NULL,
   `createDate` DATE NOT NULL,
   PRIMARY KEY (`albumId`),

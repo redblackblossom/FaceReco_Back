@@ -1,19 +1,18 @@
 package image.faceReco.controller;
 
-import image.faceReco.domain.DTO.AlbumDTO;
-import image.faceReco.domain.DTO.FolderDTO;
+import image.faceReco.domain.API.ApiResponseBody;
+import image.faceReco.domain.DTO.RepositoryIdListDTO;
+import image.faceReco.domain.DTO.RepositoryIdListOwnerIdDTO;
+import image.faceReco.domain.DTO.RepositoryIdListParentIdDTO;
+import image.faceReco.domain.DTO.RepositoryIdListParentIdOwnerIdDTO;
 import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
-import image.faceReco.service.album.AlbumService;
-import image.faceReco.service.folder.FolderService;
+import image.faceReco.service.repository.RepositoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,18 +20,33 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class RepositoryController {
-    private final FolderService folderService;
-    private final AlbumService albumService;
+    private final RepositoryService repositoryService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> findFolderAlbumByOwnerId(@UserId Integer ownerId){
-        List<FolderDTO> folderDTOList = folderService.findAllFolderByOwnerId(ownerId);
-        List<AlbumDTO> albumDTOList = albumService.findAlbumByOwnerId(ownerId);
-        Map<String,Object> folderAlbumMap = new HashMap<>();
-        folderAlbumMap.put("folders", folderDTOList);
-        folderAlbumMap.put("albums", albumDTOList);
-
+        Map<String, Object> folderAlbumMap = repositoryService.findAllRepositoryByOwnerId(ownerId);
         return ResponseEntity.ok(folderAlbumMap);
+    }
+
+
+    @DeleteMapping
+    public ResponseEntity<ApiResponseBody> deleteRepository(@UserId Integer ownerId, @RequestBody RepositoryIdListDTO repositoryIdListDTO){
+        RepositoryIdListOwnerIdDTO repositoryIdListOwnerIdDTO
+                = RepositoryIdListOwnerIdDTO.fromRepositoryIdListDTO(ownerId, repositoryIdListDTO);
+        repositoryService.deleteRepositoryByIdList(repositoryIdListOwnerIdDTO);
+        ApiResponseBody apiResponseBody = new ApiResponseBody(true, "Success to delete repository");
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponseBody);
+    }
+
+    @PatchMapping("/parentid")
+    public ResponseEntity<ApiResponseBody> updateRepositoryParentId(@UserId Integer ownerId,
+                                                                    @RequestBody RepositoryIdListParentIdDTO repositoryIdListParentIdDTO){
+        RepositoryIdListParentIdOwnerIdDTO repositoryIdListParentIdOwnerIdDTO =
+                RepositoryIdListParentIdOwnerIdDTO.fromRepositoryIdListParentIdDTO(ownerId, repositoryIdListParentIdDTO);
+
+        repositoryService.updateParentIdByIdList(repositoryIdListParentIdOwnerIdDTO);
+        ApiResponseBody apiResponseBody = new ApiResponseBody(true, "Success to update repository");
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponseBody);
     }
 
 }

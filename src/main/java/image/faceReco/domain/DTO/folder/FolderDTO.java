@@ -1,4 +1,4 @@
-package image.faceReco.domain.DTO;
+package image.faceReco.domain.DTO.folder;
 
 import image.faceReco.domain.entity.Folder;
 import lombok.Data;
@@ -20,7 +20,9 @@ public class FolderDTO {
     }
 
     public static FolderDTO fromFolder(Folder folder){
-        return new FolderDTO(folder.getFolderId(), folder.getOwnerId(), folder.getParentFolder()
+        return new FolderDTO(folder.getFolderId(), folder.getOwnerId(), folder.getParentFolderId()
                              , folder.getFolderName(), folder.getCreateDate());
     }
+
+
 }

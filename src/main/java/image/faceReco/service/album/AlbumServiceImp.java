@@ -1,7 +1,10 @@
 package image.faceReco.service.album;
 
-import image.faceReco.domain.DTO.AlbumDTO;
+import image.faceReco.domain.DTO.album.AlbumDTO;
 import image.faceReco.domain.entity.Album;
+import image.faceReco.domain.DTO.RepositoryCreateDTO;
+import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.domain.updateParam.album.AlbumDeleteByAlbumIdListParam;
 import image.faceReco.repository.album.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,5 +24,23 @@ public class AlbumServiceImp implements AlbumService {
             albumDTOList.add(AlbumDTO.fromAlbum(album));
         }
         return albumDTOList;
+    }
+
+    @Override
+    public  int createAlbum(RepositoryCreateDTO repositoryCreateDTO) {
+        Album album = Album.fromRepositoryCreateDTO(repositoryCreateDTO);
+        return albumRepository.createAlbum(album);
+    }
+/*
+    @Override
+    public int deleteAlbumByAlbumIdList(AlbumDeleteByAlbumIdListParam albumDeleteByAlbumIdListParam) {
+        return albumRepository.deleteAlbumByAlbumIdList(albumDeleteByAlbumIdListParam);
+    }
+
+
+ */
+    @Override
+    public int updateAlbumNameByAlumId(RepositoryNameUpdateParam repositoryNameUpdateParam) {
+        return albumRepository.updateAlbumNameByAlbumId(repositoryNameUpdateParam);
     }
 }

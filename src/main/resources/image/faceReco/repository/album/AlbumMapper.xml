@@ -13,7 +13,7 @@
         delete from album where albumId = #{albumId}
     </delete>
     <update id="updateAlbumNameByAlbumId">
-        update album set albumName = #{updateAlbumName} where albumId = #{albumId}
+        update album set albumName = #{updateRepositoryName} where ownerId = #{ownerId} and albumId = #{repositoryId}
     </update>
     <select id="selectAlbumByAlbumId" resultType="Album">
         select albumId, ownerId, ownerFolderId, albumName, createDate from album
@@ -23,4 +23,17 @@
         select albumId, ownerId, ownerFolderId, albumName, createDate from album
         where ownerId = #{ownerId}
     </select>
+    <delete id="deleteAlbumByAlbumIdList">
+        delete from album where ownerId = #{ownerId} and albumId in
+        <foreach collection="idList" item="albumId" open="(" separator="," close=")">
+            #{albumId}
+        </foreach>
+    </delete>
+    <update id="updateAlbumNameByAlbumIdList">
+        update album set ownerFolderId = #{parentId}
+        where ownerId = #{ownerId} and albumId in
+        <foreach collection="idList" item="albumId" open="(" separator="," close=")">
+            #{albumId}
+        </foreach>
+    </update>
 </mapper>

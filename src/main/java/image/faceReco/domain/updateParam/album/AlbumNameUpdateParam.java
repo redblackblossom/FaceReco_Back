@@ -1,4 +1,4 @@
-package image.faceReco.domain.updateParam;
+package image.faceReco.domain.updateParam.album;
 
 public class AlbumNameUpdateParam {
     int albumId;

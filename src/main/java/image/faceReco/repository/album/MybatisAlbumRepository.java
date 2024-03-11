@@ -1,7 +1,11 @@
 package image.faceReco.repository.album;
 
 import image.faceReco.domain.entity.Album;
-import image.faceReco.domain.updateParam.AlbumNameUpdateParam;
+import image.faceReco.domain.updateParam.IdListParam;
+import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.domain.updateParam.album.AlbumDeleteByAlbumIdListParam;
+import image.faceReco.domain.updateParam.album.AlbumNameUpdateParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,8 +32,8 @@ public class MybatisAlbumRepository implements AlbumRepository{
     }
 
     @Override
-    public int updateAlbumNameByAlbumId(AlbumNameUpdateParam updateParam) {
-        return albumMapper.updateAlbumNameByAlbumId(updateParam);
+    public int updateAlbumNameByAlbumId(RepositoryNameUpdateParam repositoryNameUpdateParam) {
+        return albumMapper.updateAlbumNameByAlbumId(repositoryNameUpdateParam);
     }
 
     @Override
@@ -40,5 +44,15 @@ public class MybatisAlbumRepository implements AlbumRepository{
     @Override
     public List<Album> selectAlbumByOwnerId(int ownerId) {
         return albumMapper.selectAlbumByOwnerId(ownerId);
+    }
+
+    @Override
+    public int deleteAlbumByAlbumIdList(IdListParam idListParam) {
+        return albumMapper.deleteAlbumByAlbumIdList(idListParam);
+    }
+
+    @Override
+    public int updateAlbumNameByAlbumIdList(IdListParentIdParam idListParentIdParam) {
+        return albumMapper.updateAlbumNameByAlbumIdList(idListParentIdParam);
     }
 }
