@@ -1,4 +1,4 @@
-package image.faceReco.domain.DTO;
+package image.faceReco.domain.DTO.repository;
 
 import image.faceReco.domain.entity.Folder;
 import lombok.Data;

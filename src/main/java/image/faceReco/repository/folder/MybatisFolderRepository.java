@@ -4,7 +4,6 @@ import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
-import image.faceReco.domain.updateParam.folder.ParentFolderIdUpdateByListParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -40,11 +39,6 @@ public class MybatisFolderRepository implements FolderRepository{
     @Override
     public List<Folder> selectFolderByOwnerId(Integer ownerId) {
         return folderMapper.selectFolderByOwnerId(ownerId);
-    }
-
-    @Override
-    public int deleteFolderByFolderIdArray(int ownerId, List<Integer> folderIdArray) {
-        return folderMapper.deleteFolderByFolderIdArray(ownerId, folderIdArray);
     }
 
     @Override

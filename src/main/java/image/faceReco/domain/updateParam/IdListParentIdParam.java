@@ -1,6 +1,6 @@
 package image.faceReco.domain.updateParam;
 
-import image.faceReco.domain.DTO.RepositoryIdListParentIdOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListParentIdOwnerIdDTO;
 import lombok.Data;
 
 import java.util.List;

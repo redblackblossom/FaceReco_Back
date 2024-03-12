@@ -2,10 +2,8 @@ package image.faceReco.service.folder;
 
 import image.faceReco.domain.DTO.folder.FolderDTO;
 import image.faceReco.domain.entity.Folder;
-import image.faceReco.domain.DTO.RepositoryCreateDTO;
-import image.faceReco.domain.updateParam.IdListParam;
+import image.faceReco.domain.DTO.repository.RepositoryCreateDTO;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
-import image.faceReco.domain.updateParam.folder.ParentFolderIdUpdateByListParam;
 import image.faceReco.repository.folder.FolderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,21 +31,9 @@ public class FolderServiceImp implements FolderService{
         Folder folder = Folder.fromRepositoryCreateParam(repositoryCreateDTO);
         return folderRepository.createFolder(folder);
     }
-
     @Override
     @Transactional
     public int updateFolderName(RepositoryNameUpdateParam repositoryNameUpdateParam) {
         return folderRepository.updateFolderName(repositoryNameUpdateParam);
     }
-
-    /*
-    @Override
-    @Transactional
-    public int updateFolderByParentFolderIdList(ParentFolderIdUpdateByListParam parentFolderIdUpdateByListParam) {
-        return folderRepository.updateFolderParentIdByFolderIdList(parentFolderIdUpdateByListParam);
-    }
-
-     */
-
-
 }

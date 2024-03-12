@@ -4,7 +4,6 @@ import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
-import image.faceReco.domain.updateParam.folder.ParentFolderIdUpdateByListParam;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,10 +105,10 @@ class MybatisFolderRepositoryTest {
     @Test
     public void deleteFolderByFoldrIdList(){
         //given
-        Integer ownerID = 1;
-        Folder savedFolder1 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
-        Folder savedFolder2 = new Folder(ownerID,savedFolder1.getFolderId(), "testFolder1", "2024-03-06");
-        Folder savedFolder3 = new Folder(ownerID,null, "testFolder1", "2024-03-06");
+        int ownerId = 1;
+        Folder savedFolder1 = new Folder(ownerId,null, "testFolder1", "2024-03-06");
+        Folder savedFolder2 = new Folder(ownerId,testFolder.getFolderId(), "testFolder1", "2024-03-06");
+        Folder savedFolder3 = new Folder(ownerId,null, "testFolder1", "2024-03-06");
         folderRepository.createFolder(savedFolder1);
         folderRepository.createFolder(savedFolder2);
         folderRepository.createFolder(savedFolder3);
@@ -117,7 +116,7 @@ class MybatisFolderRepositoryTest {
         folderIdList.add(savedFolder1.getFolderId());
         folderIdList.add(savedFolder2.getFolderId());
         folderIdList.add(savedFolder3.getFolderId());
-        IdListParam param = new IdListParam(ownerID, folderIdList);
+        IdListParam param = new IdListParam(ownerId, folderIdList);
 
         //when
         folderRepository.deleteFolderByFoldrIdList(param);

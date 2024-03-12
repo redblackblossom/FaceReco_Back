@@ -30,9 +30,4 @@
             #{folderId}
         </foreach>
     </update>
-    <!--
-    <delete id="deleteFolderByFolderIdArray">
-        delete from folder where ownerId = #{}
-    </delete>
-    -->
 </mapper>

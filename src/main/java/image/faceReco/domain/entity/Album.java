@@ -1,6 +1,6 @@
 package image.faceReco.domain.entity;
 
-import image.faceReco.domain.DTO.RepositoryCreateDTO;
+import image.faceReco.domain.DTO.repository.RepositoryCreateDTO;
 import lombok.Data;
 
 @Data

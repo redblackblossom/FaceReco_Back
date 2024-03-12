@@ -1,10 +1,10 @@
 package image.faceReco.controller;
 
 import image.faceReco.domain.API.ApiResponseBody;
-import image.faceReco.domain.DTO.RepositoryIdListDTO;
-import image.faceReco.domain.DTO.RepositoryIdListOwnerIdDTO;
-import image.faceReco.domain.DTO.RepositoryIdListParentIdDTO;
-import image.faceReco.domain.DTO.RepositoryIdListParentIdOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListParentIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListParentIdOwnerIdDTO;
 import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
 import image.faceReco.service.repository.RepositoryService;
 import lombok.RequiredArgsConstructor;

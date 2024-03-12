@@ -4,9 +4,6 @@ import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
-import image.faceReco.domain.updateParam.album.AlbumDeleteByAlbumIdListParam;
-import image.faceReco.domain.updateParam.album.AlbumNameUpdateParam;
-
 import java.util.List;
 
 public interface AlbumRepository {

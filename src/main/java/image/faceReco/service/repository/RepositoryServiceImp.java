@@ -1,9 +1,9 @@
 package image.faceReco.service.repository;
 
-import image.faceReco.domain.DTO.RepositoryIdListOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListOwnerIdDTO;
 import image.faceReco.domain.DTO.album.AlbumDTO;
 import image.faceReco.domain.DTO.folder.FolderDTO;
-import image.faceReco.domain.DTO.RepositoryIdListParentIdOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListParentIdOwnerIdDTO;
 import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;

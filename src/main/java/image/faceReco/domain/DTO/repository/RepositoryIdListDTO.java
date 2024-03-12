@@ -1,8 +1,6 @@
-package image.faceReco.domain.DTO;
+package image.faceReco.domain.DTO.repository;
 
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class RepositoryIdListDTO {

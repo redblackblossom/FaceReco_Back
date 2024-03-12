@@ -1,7 +1,7 @@
 package image.faceReco.service.repository;
 
-import image.faceReco.domain.DTO.RepositoryIdListOwnerIdDTO;
-import image.faceReco.domain.DTO.RepositoryIdListParentIdOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListOwnerIdDTO;
+import image.faceReco.domain.DTO.repository.RepositoryIdListParentIdOwnerIdDTO;
 
 import java.util.Map;
 

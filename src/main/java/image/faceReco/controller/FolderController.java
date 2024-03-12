@@ -1,13 +1,11 @@
 package image.faceReco.controller;
 
 import image.faceReco.domain.API.ApiResponseBody;
-import image.faceReco.domain.DTO.PatchRepositoryNameDTO;
-import image.faceReco.domain.DTO.PostRepositoryDTO;
+import image.faceReco.domain.DTO.repository.PatchRepositoryNameDTO;
+import image.faceReco.domain.DTO.repository.PostRepositoryDTO;
 import image.faceReco.domain.DTO.folder.*;
-import image.faceReco.domain.DTO.RepositoryCreateDTO;
-import image.faceReco.domain.updateParam.IdListParam;
+import image.faceReco.domain.DTO.repository.RepositoryCreateDTO;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
-import image.faceReco.domain.updateParam.folder.ParentFolderIdUpdateByListParam;
 import image.faceReco.methodArgumentResolver.resolverInterface.UserId;
 import image.faceReco.service.folder.FolderService;
 import lombok.RequiredArgsConstructor;

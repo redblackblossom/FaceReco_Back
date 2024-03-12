@@ -1,6 +1,6 @@
 package image.faceReco.domain.updateParam;
 
-import image.faceReco.domain.DTO.PatchRepositoryNameDTO;
+import image.faceReco.domain.DTO.repository.PatchRepositoryNameDTO;
 import lombok.Data;
 
 @Data
