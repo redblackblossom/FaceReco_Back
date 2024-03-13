@@ -3,6 +3,7 @@ package image.faceReco.repository.folder;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Transactional
@@ -150,5 +152,29 @@ class MybatisFolderRepositoryTest {
         Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder1.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
         Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder2.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
         Assertions.assertThat(folderRepository.selectFolderByFolderId(savedFolder3.getFolderId()).get(0).getParentFolderId()).isEqualTo(testFolder.getFolderId());
+    }
+
+    @Test
+    public void selectFolderByParentFolderIdFolderName(){
+        //given
+        int ownerId = 1;
+        Folder savedFolder1 = new Folder(ownerId,null, UUID.randomUUID().toString(), "2024-03-06");
+        folderRepository.createFolder(savedFolder1);
+        Folder savedFolder2 = new Folder(ownerId,savedFolder1.getFolderId(), UUID.randomUUID().toString(), "2024-03-06");
+        Folder savedFolder3 = new Folder(ownerId,savedFolder1.getFolderId(), UUID.randomUUID().toString(), "2024-03-06");
+        folderRepository.createFolder(savedFolder2);
+        folderRepository.createFolder(savedFolder3);
+
+        List<String> folderNameList1 = List.of(savedFolder1.getFolderName());
+        List<String> folderNameList2 = List.of(savedFolder2.getFolderName(),savedFolder3.getFolderName());
+        ParentIdNameListParam param1 = new ParentIdNameListParam(ownerId, null, folderNameList1);
+        ParentIdNameListParam param2 = new ParentIdNameListParam(ownerId, savedFolder1.getFolderId(), folderNameList2);
+
+        //when
+        List<String> returnNameList1 = folderRepository.selectFolderByParentFolderIdFolderName(param1);
+        List<String> returnNameList2 = folderRepository.selectFolderByParentFolderIdFolderName(param2);
+
+        Assertions.assertThat(returnNameList1).contains(savedFolder1.getFolderName());
+        Assertions.assertThat(returnNameList2).contains(savedFolder2.getFolderName(), savedFolder3.getFolderName());
     }
 }

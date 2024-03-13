@@ -3,7 +3,9 @@ package image.faceReco.service.album;
 import image.faceReco.domain.DTO.album.AlbumDTO;
 import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.DTO.repository.RepositoryCreateDTO;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.exception.DuplicateNameException;
 import image.faceReco.repository.album.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,10 +30,23 @@ public class AlbumServiceImp implements AlbumService {
     @Override
     public  int createAlbum(RepositoryCreateDTO repositoryCreateDTO) {
         Album album = Album.fromRepositoryCreateDTO(repositoryCreateDTO);
+        checkDuplicateFolderName(repositoryCreateDTO.getOwnerId(), repositoryCreateDTO.getParentId(),
+                                repositoryCreateDTO.getName());
         return albumRepository.createAlbum(album);
     }
     @Override
     public int updateAlbumNameByAlumId(RepositoryNameUpdateParam repositoryNameUpdateParam) {
+        Integer ownerFolderId = albumRepository.selectAlbumByAlbumId(repositoryNameUpdateParam.getRepositoryId()).get(0).getOwnerFolderId();
+        checkDuplicateFolderName(repositoryNameUpdateParam.getOwnerId(), ownerFolderId,
+                                repositoryNameUpdateParam.getUpdateRepositoryName());
         return albumRepository.updateAlbumNameByAlbumId(repositoryNameUpdateParam);
+    }
+
+    private void checkDuplicateFolderName(int ownerId, Integer ownerFolderId, String name) {
+        ParentIdNameListParam param = new ParentIdNameListParam(ownerId,ownerFolderId, List.of(name));
+        List<String> duplicateNameList = albumRepository.selectAlbumByOwnerFolderIdFolderName(param);
+        if(!duplicateNameList.isEmpty()){
+            throw new DuplicateNameException(duplicateNameList);
+        }
     }
 }

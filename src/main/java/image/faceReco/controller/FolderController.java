@@ -40,16 +40,9 @@ public class FolderController {
         RepositoryCreateDTO repositoryCreateDTO = RepositoryCreateDTO.fromPostRepositoryDTO(ownerId, postRepositoryDTO);
         int createdCount = folderService.createFolder(repositoryCreateDTO);
         ApiResponseBody apiResponseBody = new ApiResponseBody();
-        if(createdCount==0){
-            apiResponseBody.setSuccess(false);
-            apiResponseBody.setMessage("Fail to create folder!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponseBody);
-        }
-        else{
-            apiResponseBody.setSuccess(true);
-            apiResponseBody.setMessage("Success to create folder!");
-            return ResponseEntity.status(HttpStatus.CREATED).body(apiResponseBody);
-        }
+        apiResponseBody.setSuccess(true);
+        apiResponseBody.setMessage("Success to create folder!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponseBody);
     }
 
     @PatchMapping("/name")
@@ -58,36 +51,9 @@ public class FolderController {
         RepositoryNameUpdateParam repositoryNameUpdateParam = RepositoryNameUpdateParam.fromPatchRepositoryNameDTO(ownerId, patchRepositoryNameDTO);
         int updatedCount = folderService.updateFolderName(repositoryNameUpdateParam);
         ApiResponseBody apiResponseBody = new ApiResponseBody();
-        if(updatedCount==0){
-            apiResponseBody.setSuccess(false);
-            apiResponseBody.setMessage("Fail to rename folder!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponseBody);
-        }
-        else{
-            apiResponseBody.setSuccess(true);
-            apiResponseBody.setMessage("Success to rename folder!");
-            return ResponseEntity.status(HttpStatus.OK).body(apiResponseBody);
-        }
+        apiResponseBody.setSuccess(true);
+        apiResponseBody.setMessage("Success to rename folder!");
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponseBody);
     }
-    /*
-    @PatchMapping("/parentfolderid")
-    public ResponseEntity<ApiResponseBody> updateFolderParentId(@UserId Integer ownerId,
-                                                                @RequestBody PatchParentFolderIdDTO patchParentFolderIdDTO){
-        ParentFolderIdUpdateByListParam parentFolderIdUpdateParamList = ParentFolderIdUpdateByListParam.fromPatchParentFolderDTO(ownerId,patchParentFolderIdDTO);
-        int updatedCount = folderService.updateFolderByParentFolderIdList(parentFolderIdUpdateParamList);
-        ApiResponseBody apiResponseBody = new ApiResponseBody();
-        if(updatedCount==0){
-            apiResponseBody.setSuccess(false);
-            apiResponseBody.setMessage("Fail to change ParentFolderId!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponseBody);
-        }
-        else{
-            apiResponseBody.setSuccess(true);
-            apiResponseBody.setMessage("Success to change ParentFolderId!");
-            return ResponseEntity.status(HttpStatus.OK).body(apiResponseBody);
-        }
-    }
-
-     */
 
 }

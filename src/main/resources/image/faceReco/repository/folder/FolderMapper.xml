@@ -30,4 +30,17 @@
             #{folderId}
         </foreach>
     </update>
+    <select id="selectFolderByParentFolderIdFolderName" resultType="String">
+        select folderName from folder where ownerId = #{ownerId}
+        <if test="parentId != null">
+            and parentFolderId = #{parentId}
+        </if>
+        <if test="parentId == null">
+            and parentFolderId is null
+        </if>
+        and folderName in
+        <foreach collection="nameList" item="folderName" open="(" separator="," close=")">
+            #{folderName}
+        </foreach>
+    </select>
 </mapper>

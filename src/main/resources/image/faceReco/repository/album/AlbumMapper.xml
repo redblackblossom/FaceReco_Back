@@ -36,4 +36,17 @@
             #{albumId}
         </foreach>
     </update>
+    <select id="selectAlbumByOwnerFolderIdFolderName" resultType="String">
+        select albumName from album where ownerId = #{ownerId}
+        <if test="parentId != null">
+            and ownerFolderId = #{parentId}
+        </if>
+        <if test="parentId == null">
+            and ownerFolderId is null
+        </if>
+        and albumName in
+        <foreach collection="nameList" item="albumName" open="(" separator="," close=")">
+            #{albumName}
+        </foreach>
+    </select>
 </mapper>

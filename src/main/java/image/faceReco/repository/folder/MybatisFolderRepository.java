@@ -3,11 +3,13 @@ package image.faceReco.repository.folder;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -49,5 +51,10 @@ public class MybatisFolderRepository implements FolderRepository{
     @Override
     public int updateFolderParentIdByFolderIdList(IdListParentIdParam idListParentIdParam) {
         return folderMapper.updateFolderParentIdByFolderIdList(idListParentIdParam);
+    }
+
+    @Override
+    public List<String> selectFolderByParentFolderIdFolderName(ParentIdNameListParam parentIdNameListParam){
+        return folderMapper.selectFolderByParentFolderIdFolderName(parentIdNameListParam);
     }
 }

@@ -3,7 +3,9 @@ package image.faceReco.service.folder;
 import image.faceReco.domain.DTO.folder.FolderDTO;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.DTO.repository.RepositoryCreateDTO;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
+import image.faceReco.exception.DuplicateNameException;
 import image.faceReco.repository.folder.FolderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class FolderServiceImp implements FolderService{
     private final FolderRepository folderRepository;
     @Override
+    @Transactional(readOnly = true)
     public List<FolderDTO> findAllFolderByOwnerId(int userId) {
         List<Folder> listFolder = folderRepository.selectFolderByOwnerId(userId);
         List<FolderDTO> listFolderDTO = new ArrayList<>();
@@ -26,14 +30,24 @@ public class FolderServiceImp implements FolderService{
         return listFolderDTO;
     }
     @Override
-    @Transactional
     public int createFolder(RepositoryCreateDTO repositoryCreateDTO) {
         Folder folder = Folder.fromRepositoryCreateParam(repositoryCreateDTO);
+        checkDuplicateFolderName(folder.getOwnerId(), folder.getParentFolderId(), folder.getFolderName());
         return folderRepository.createFolder(folder);
     }
     @Override
-    @Transactional
     public int updateFolderName(RepositoryNameUpdateParam repositoryNameUpdateParam) {
+        Integer parentFolderId = folderRepository.selectFolderByFolderId(repositoryNameUpdateParam.getRepositoryId()).get(0).getParentFolderId();
+        checkDuplicateFolderName(repositoryNameUpdateParam.getOwnerId(),parentFolderId,
+                repositoryNameUpdateParam.getUpdateRepositoryName());
         return folderRepository.updateFolderName(repositoryNameUpdateParam);
+    }
+
+    private void checkDuplicateFolderName(int ownerId, Integer parentFolderId, String name){
+        ParentIdNameListParam param = new ParentIdNameListParam(ownerId,parentFolderId, List.of(name));
+        List<String> duplicateNameList =   folderRepository.selectFolderByParentFolderIdFolderName(param);
+        if(!duplicateNameList.isEmpty()){
+            throw new DuplicateNameException(duplicateNameList);
+        }
     }
 }

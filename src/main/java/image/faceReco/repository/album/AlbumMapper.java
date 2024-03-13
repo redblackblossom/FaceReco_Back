@@ -3,6 +3,7 @@ package image.faceReco.repository.album;
 import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,5 @@ public interface AlbumMapper {
     List<Album> selectAlbumByOwnerId(int ownerId);
     int deleteAlbumByAlbumIdList(IdListParam idListParam);
     int updateAlbumNameByAlbumIdList(IdListParentIdParam idListParentIdParam);
+    List<String> selectAlbumByOwnerFolderIdFolderName(ParentIdNameListParam parentIdNameListParam);
 }

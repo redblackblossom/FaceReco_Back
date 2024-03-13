@@ -4,6 +4,7 @@ import image.faceReco.domain.entity.Album;
 import image.faceReco.domain.entity.Folder;
 import image.faceReco.domain.updateParam.IdListParam;
 import image.faceReco.domain.updateParam.IdListParentIdParam;
+import image.faceReco.domain.updateParam.ParentIdNameListParam;
 import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import image.faceReco.repository.folder.FolderRepository;
 import org.assertj.core.api.Assertions;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @Transactional
@@ -177,6 +179,30 @@ class MybatisAlbumRepositoryTest {
         Assertions.assertThat(parent1).isEqualTo(testFolder.getFolderId());
         Assertions.assertThat(parent2).isEqualTo(testFolder.getFolderId());
         Assertions.assertThat(parent3).isEqualTo(testFolder.getFolderId());
+    }
+
+    @Test
+    public void selectAlbumByParentFolderIdFolderName(){
+        //given
+        int ownerId = 1;
+        Album createAlbum1 = new Album(ownerId, null, UUID.randomUUID().toString(), "2024-03-10");
+        albumRepository.createAlbum(createAlbum1);
+        Album createAlbum2 = new Album(ownerId, testFolder.getFolderId(), UUID.randomUUID().toString(), "2024-03-10");
+        Album createAlbum3 = new Album(ownerId, testFolder.getFolderId(), UUID.randomUUID().toString(), "2024-03-10");
+        albumRepository.createAlbum(createAlbum2);
+        albumRepository.createAlbum(createAlbum3);
+        List<String> nameList1 =List.of(createAlbum1.getAlbumName());
+        List<String> nameList2 =List.of(createAlbum2.getAlbumName(), createAlbum3.getAlbumName());
+        ParentIdNameListParam param1 = new ParentIdNameListParam(ownerId, null, nameList1);
+        ParentIdNameListParam param2 = new ParentIdNameListParam(ownerId, testFolder.getFolderId(), nameList2);
+
+        //when
+        List<String> findNameList1 = albumRepository.selectAlbumByOwnerFolderIdFolderName(param1);
+        List<String> findNameList2 = albumRepository.selectAlbumByOwnerFolderIdFolderName(param2);
+
+        //then
+        Assertions.assertThat(findNameList1).contains(createAlbum1.getAlbumName());
+        Assertions.assertThat(findNameList2).contains(createAlbum2.getAlbumName(), createAlbum3.getAlbumName());
 
     }
 
