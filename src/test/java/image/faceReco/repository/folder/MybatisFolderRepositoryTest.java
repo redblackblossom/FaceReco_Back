@@ -52,10 +52,10 @@ class MybatisFolderRepositoryTest {
         Folder folder = new Folder(1,null, "myTestFolder2",nowDate);
 
         //when
-        int index = folderRepository.createFolder(folder);
+        List<Folder> createdFolder = folderRepository.createFolder(folder);
 
         //Then
-        Assertions.assertThat(index).isEqualTo(1);
+        Assertions.assertThat(createdFolder.size()).isEqualTo(1);
     }
 
     @Test

@@ -10,7 +10,7 @@ import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import java.util.List;
 
 public interface FolderRepository {
-    int createFolder(Folder folder);
+    List<Folder> createFolder(Folder folder);
     int updateFolderName(RepositoryNameUpdateParam updateParam);
     List<Folder> selectFolderByFolderId(Integer folderId);
     int deleteFolderByFolderId (Integer folderId);

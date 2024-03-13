@@ -30,10 +30,13 @@ public class FolderServiceImp implements FolderService{
         return listFolderDTO;
     }
     @Override
-    public int createFolder(RepositoryCreateDTO repositoryCreateDTO) {
+    public FolderDTO createFolder(RepositoryCreateDTO repositoryCreateDTO) {
         Folder folder = Folder.fromRepositoryCreateParam(repositoryCreateDTO);
         checkDuplicateFolderName(folder.getOwnerId(), folder.getParentFolderId(), folder.getFolderName());
-        return folderRepository.createFolder(folder);
+        List<Folder> createdFolder = folderRepository.createFolder(folder);
+
+        //나중에 오류 추가 예정(폴더 못만든 예외)
+        return FolderDTO.fromFolder(createdFolder.get(0));
     }
     @Override
     public int updateFolderName(RepositoryNameUpdateParam repositoryNameUpdateParam) {

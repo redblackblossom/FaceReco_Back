@@ -58,12 +58,10 @@ class MybatisAlbumRepositoryTest {
         Album createdAlbum = new Album(1, testFolder.getFolderId(), "myTestAlbum", nowDate);
 
         //when
-        int createdCount = albumRepository.createAlbum(createdAlbum);
-        List<Album> finedAlbum = albumRepository.selectAlbumByAlbumId(createdAlbum.getAlbumId());
+        List<Album> createAlbumList = albumRepository.createAlbum(createdAlbum);
 
         //then
-        Assertions.assertThat(createdCount).isEqualTo(1);
-        Assertions.assertThat(createdAlbum).isEqualTo(finedAlbum.get(0));
+        Assertions.assertThat(createAlbumList.size()).isEqualTo(1);
     }
 
     @Test

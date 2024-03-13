@@ -16,8 +16,9 @@ public class MybatisAlbumRepository implements AlbumRepository{
     private AlbumMapper albumMapper;
 
     @Override
-    public int createAlbum(Album album) {
-        return albumMapper.createAlbum(album);
+    public List<Album> createAlbum(Album album) {
+        int createCount =  albumMapper.createAlbum(album);
+        return albumMapper.selectAlbumByAlbumId(album.getAlbumId());
     }
 
     @Override

@@ -31,10 +31,10 @@ public class RepositoryServiceImp implements RepositoryService {
         List<Album> albumList = albumRepository.selectAlbumByOwnerId(ownerId);
         List<FolderDTO> folderDTOList = folderList.stream().map(FolderDTO::fromFolder).toList();
         List<AlbumDTO> albumDTOList = albumList.stream().map(AlbumDTO::fromAlbum).toList();
-        Map<String, Object> FolderAndAlbum = new HashMap<>();
-        FolderAndAlbum.put("Folders", folderDTOList);
-        FolderAndAlbum.put("Albums", albumDTOList);
-        return FolderAndAlbum;
+        Map<String, Object> repository = new HashMap<>();
+        repository.put("Folders", folderDTOList);
+        repository.put("Albums", albumDTOList);
+        return repository;
     }
 
     @Override

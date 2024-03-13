@@ -35,14 +35,12 @@ public class FolderController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> createNewFolder(@UserId Integer ownerId,
+    public ResponseEntity<FolderDTO> createNewFolder(@UserId Integer ownerId,
                                                            @RequestBody PostRepositoryDTO postRepositoryDTO){
         RepositoryCreateDTO repositoryCreateDTO = RepositoryCreateDTO.fromPostRepositoryDTO(ownerId, postRepositoryDTO);
-        int createdCount = folderService.createFolder(repositoryCreateDTO);
-        ApiResponseBody apiResponseBody = new ApiResponseBody();
-        apiResponseBody.setSuccess(true);
-        apiResponseBody.setMessage("Success to create folder!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponseBody);
+        FolderDTO folderDTO =  folderService.createFolder(repositoryCreateDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(folderDTO);
     }
 
     @PatchMapping("/name")

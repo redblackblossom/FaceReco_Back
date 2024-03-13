@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -19,8 +20,9 @@ public class MybatisFolderRepository implements FolderRepository{
     private final FolderMapper folderMapper;
 
     @Override
-    public int createFolder(Folder folder) {
-        return folderMapper.createFolder(folder);
+    public List<Folder> createFolder(Folder folder) {
+        int createCount = folderMapper.createFolder(folder);
+        return folderMapper.selectFolderByFolderId(folder.getFolderId());
     }
 
     @Override

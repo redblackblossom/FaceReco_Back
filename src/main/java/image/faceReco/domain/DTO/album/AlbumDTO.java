@@ -19,6 +19,7 @@ public class AlbumDTO {
         this.createDate = createDate;
     }
 
+
     public static AlbumDTO fromAlbum(Album album){
         return new AlbumDTO(album.getAlbumId(), album.getOwnerId(), album.getOwnerFolderId()
                             , album.getAlbumName(), album.getCreateDate());

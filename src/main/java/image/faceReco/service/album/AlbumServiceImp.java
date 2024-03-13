@@ -28,11 +28,14 @@ public class AlbumServiceImp implements AlbumService {
     }
 
     @Override
-    public  int createAlbum(RepositoryCreateDTO repositoryCreateDTO) {
+    public AlbumDTO createAlbum(RepositoryCreateDTO repositoryCreateDTO) {
         Album album = Album.fromRepositoryCreateDTO(repositoryCreateDTO);
         checkDuplicateFolderName(repositoryCreateDTO.getOwnerId(), repositoryCreateDTO.getParentId(),
                                 repositoryCreateDTO.getName());
-        return albumRepository.createAlbum(album);
+        List<Album> createAlbumList = albumRepository.createAlbum(album);
+        //오류 추가 예정
+
+        return AlbumDTO.fromAlbum(createAlbumList.get(0));
     }
     @Override
     public int updateAlbumNameByAlumId(RepositoryNameUpdateParam repositoryNameUpdateParam) {

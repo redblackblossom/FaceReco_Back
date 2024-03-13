@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface FolderService {
     List<FolderDTO> findAllFolderByOwnerId(int userId);
-    int createFolder(RepositoryCreateDTO repositoryCreateDTO);
+    FolderDTO createFolder(RepositoryCreateDTO repositoryCreateDTO);
     int updateFolderName(RepositoryNameUpdateParam repositoryNameUpdateParam);
 }

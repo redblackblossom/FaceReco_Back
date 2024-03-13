@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AlbumService {
     List<AlbumDTO> findAlbumByOwnerId(int ownerId);
-    int createAlbum(RepositoryCreateDTO  repositoryCreateDTO);
+    AlbumDTO createAlbum(RepositoryCreateDTO  repositoryCreateDTO);
     int updateAlbumNameByAlumId(RepositoryNameUpdateParam repositoryNameUpdateParam);
 }

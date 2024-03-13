@@ -8,7 +8,7 @@ import image.faceReco.domain.updateParam.RepositoryNameUpdateParam;
 import java.util.List;
 
 public interface AlbumRepository {
-    int createAlbum(Album album);
+    List<Album> createAlbum(Album album);
     List<Album> selectAlbumByParentFolderId(Integer parentFolderId);
     int deleteAlbumByAlbumId(Integer albumId);
     int updateAlbumNameByAlbumId(RepositoryNameUpdateParam repositoryNameUpdateParam);
