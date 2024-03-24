@@ -33,13 +33,11 @@ public class AlbumController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> createNewAlbum(@UserId Integer ownerId, @RequestBody PostRepositoryDTO postRepositoryDTO){
+    public ResponseEntity<AlbumDTO> createNewAlbum(@UserId Integer ownerId, @RequestBody PostRepositoryDTO postRepositoryDTO){
         RepositoryCreateDTO repositoryCreateDTO = RepositoryCreateDTO.fromPostRepositoryDTO(ownerId, postRepositoryDTO);
-        albumService.createAlbum(repositoryCreateDTO);
-        ApiResponseBody apiResponseBody = new ApiResponseBody(true, "Success to create album!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponseBody);
+        AlbumDTO albumDTO  = albumService.createAlbum(repositoryCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(albumDTO);
     }
-
 
     @PatchMapping("/name")
     public ResponseEntity<ApiResponseBody> updateAlbumName(@UserId Integer ownerId,
