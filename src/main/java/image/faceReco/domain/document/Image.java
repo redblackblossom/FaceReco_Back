@@ -49,8 +49,10 @@ public class Image {
     private List<Integer> detectedFace;
 
     public static Image fromPostImageMetaData(int userId, PostImageMetaData imageMetaData){
-        String uuid = UUID.randomUUID().toString();
-        String awsDir = imageMetaData.getOwnerAlbumId().toString() + "/" + ImageDirectory.RAW + "/" + uuid +imageMetaData.getImageName();
+        int index = imageMetaData.getImageName().lastIndexOf(".");
+        String extension =  imageMetaData.getImageName().substring(index);
+        String uuidImageDir = UUID.randomUUID().toString();
+        String awsDir = String.valueOf(userId) +"-"+ uuidImageDir + extension;
         GeoPoint geoPoint;
         if(imageMetaData.getLocation()==null)
             geoPoint =null;

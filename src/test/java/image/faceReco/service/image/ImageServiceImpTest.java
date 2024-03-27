@@ -1,6 +1,7 @@
 package image.faceReco.service.image;
 
 import image.faceReco.domain.document.Image;
+import image.faceReco.repository.es.ImageElasticSearchRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ImageServiceImpTest {
     @Autowired
     private ImageService imageService;
-
+    @Autowired
+    private ImageElasticSearchRepository imageElasticSearchRepository;
     @Test
     public void createImage(){
+        //given
         Image image =  Image.builder()
                 .id(null)
                 .imageName("simpleName")
@@ -31,11 +34,14 @@ class ImageServiceImpTest {
                 .ownerId(1)
                 .ownerAlbumId(11)
                 .caption("simple test image!")
-                .awsName("asd/11")
+                .awsName("11")
                 .detectedFace(null)
                 .build();
+        //when
         imageService.createImage(image, null);
+        //then
         Assertions.assertThat(image.getId()).isNotNull();
-        System.out.println(image.getId());
+        //after
+        imageElasticSearchRepository.delete(image);
     }
 }

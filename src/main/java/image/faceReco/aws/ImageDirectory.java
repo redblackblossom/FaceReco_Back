@@ -1,6 +1,12 @@
 package image.faceReco.aws;
 
-public interface ImageDirectory {
-    public static final String RAW = "raw";
-    public static final String COMPACTION = "COMPACTION";
+public class ImageDirectory {
+    private static final String RAW = "raw";
+    private static final String COMPACTION = "compaction";
+    public static String toRawDirectory(String imageUuid){
+        return ImageDirectory.RAW + "/" + imageUuid;
+    }
+    public static String toCompactionDirectory(String imageUuid){
+        return ImageDirectory.COMPACTION +"/" + imageUuid;
+    }
 }
